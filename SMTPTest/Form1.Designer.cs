@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.runTestBTN = new System.Windows.Forms.Button();
-            this.serverResponseTB = new System.Windows.Forms.TextBox();
-            this.serverResponseLBL = new System.Windows.Forms.Label();
+            this.resultsTB = new System.Windows.Forms.TextBox();
+            this.resultsLBL = new System.Windows.Forms.Label();
             this.serverAddressTB = new System.Windows.Forms.TextBox();
             this.serverAddressLBL = new System.Windows.Forms.Label();
             this.mailToLBL = new System.Windows.Forms.Label();
@@ -59,30 +59,32 @@
             this.runTestBTN.UseVisualStyleBackColor = true;
             this.runTestBTN.Click += new System.EventHandler(this.runTestBTN_Click);
             // 
-            // serverResponseTB
+            // resultsTB
             // 
-            this.serverResponseTB.AcceptsReturn = true;
-            this.serverResponseTB.Location = new System.Drawing.Point(35, 324);
-            this.serverResponseTB.Multiline = true;
-            this.serverResponseTB.Name = "serverResponseTB";
-            this.serverResponseTB.Size = new System.Drawing.Size(435, 97);
-            this.serverResponseTB.TabIndex = 9;
+            this.resultsTB.AcceptsReturn = true;
+            this.resultsTB.Location = new System.Drawing.Point(35, 324);
+            this.resultsTB.Multiline = true;
+            this.resultsTB.Name = "resultsTB";
+            this.resultsTB.Size = new System.Drawing.Size(435, 97);
+            this.resultsTB.TabIndex = 9;
             // 
-            // serverResponseLBL
+            // resultsLBL
             // 
-            this.serverResponseLBL.AutoSize = true;
-            this.serverResponseLBL.Location = new System.Drawing.Point(32, 308);
-            this.serverResponseLBL.Name = "serverResponseLBL";
-            this.serverResponseLBL.Size = new System.Drawing.Size(89, 13);
-            this.serverResponseLBL.TabIndex = 2;
-            this.serverResponseLBL.Text = "Server Response";
+            this.resultsLBL.AutoSize = true;
+            this.resultsLBL.Location = new System.Drawing.Point(32, 308);
+            this.resultsLBL.Name = "resultsLBL";
+            this.resultsLBL.Size = new System.Drawing.Size(42, 13);
+            this.resultsLBL.TabIndex = 2;
+            this.resultsLBL.Text = "Results";
             // 
             // serverAddressTB
             // 
+            this.serverAddressTB.BackColor = System.Drawing.SystemColors.Window;
             this.serverAddressTB.Location = new System.Drawing.Point(112, 12);
             this.serverAddressTB.Name = "serverAddressTB";
             this.serverAddressTB.Size = new System.Drawing.Size(358, 20);
             this.serverAddressTB.TabIndex = 1;
+            this.serverAddressTB.Leave += new System.EventHandler(this.serverAddressTB_Leave);
             // 
             // serverAddressLBL
             // 
@@ -108,6 +110,7 @@
             this.mailToTB.Name = "mailToTB";
             this.mailToTB.Size = new System.Drawing.Size(358, 20);
             this.mailToTB.TabIndex = 2;
+            this.mailToTB.Leave += new System.EventHandler(this.mailToTB_Leave);
             // 
             // mailFromLBL
             // 
@@ -124,6 +127,7 @@
             this.mailFromTB.Name = "mailFromTB";
             this.mailFromTB.Size = new System.Drawing.Size(358, 20);
             this.mailFromTB.TabIndex = 3;
+            this.mailFromTB.Leave += new System.EventHandler(this.mailFromTB_Leave);
             // 
             // usernameLBL
             // 
@@ -207,6 +211,7 @@
             this.serverPortTB.Size = new System.Drawing.Size(358, 20);
             this.serverPortTB.TabIndex = 17;
             this.serverPortTB.Text = "25";
+            this.serverPortTB.Leave += new System.EventHandler(this.serverPortTB_Leave);
             // 
             // Form1
             // 
@@ -229,8 +234,8 @@
             this.Controls.Add(this.mailToTB);
             this.Controls.Add(this.serverAddressLBL);
             this.Controls.Add(this.serverAddressTB);
-            this.Controls.Add(this.serverResponseLBL);
-            this.Controls.Add(this.serverResponseTB);
+            this.Controls.Add(this.resultsLBL);
+            this.Controls.Add(this.resultsTB);
             this.Controls.Add(this.runTestBTN);
             this.Name = "Form1";
             this.Text = "Simple SMTP Test";
@@ -242,8 +247,8 @@
         #endregion
 
         private System.Windows.Forms.Button runTestBTN;
-        private System.Windows.Forms.TextBox serverResponseTB;
-        private System.Windows.Forms.Label serverResponseLBL;
+        private System.Windows.Forms.TextBox resultsTB;
+        private System.Windows.Forms.Label resultsLBL;
         private System.Windows.Forms.TextBox serverAddressTB;
         private System.Windows.Forms.Label serverAddressLBL;
         private System.Windows.Forms.Label mailToLBL;
