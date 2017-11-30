@@ -47,31 +47,35 @@
             this.bodyTB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.serverPortTB = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // runTestBTN
             // 
-            this.runTestBTN.Location = new System.Drawing.Point(203, 287);
+            this.runTestBTN.Location = new System.Drawing.Point(214, 329);
             this.runTestBTN.Name = "runTestBTN";
             this.runTestBTN.Size = new System.Drawing.Size(124, 23);
             this.runTestBTN.TabIndex = 8;
-            this.runTestBTN.Text = "Run Test";
+            this.runTestBTN.Text = "Send Mail";
             this.runTestBTN.UseVisualStyleBackColor = true;
             this.runTestBTN.Click += new System.EventHandler(this.runTestBTN_Click);
             // 
             // resultsTB
             // 
             this.resultsTB.AcceptsReturn = true;
-            this.resultsTB.Location = new System.Drawing.Point(35, 324);
+            this.resultsTB.Location = new System.Drawing.Point(35, 358);
             this.resultsTB.Multiline = true;
             this.resultsTB.Name = "resultsTB";
-            this.resultsTB.Size = new System.Drawing.Size(435, 97);
+            this.resultsTB.Size = new System.Drawing.Size(457, 207);
             this.resultsTB.TabIndex = 9;
             // 
             // resultsLBL
             // 
             this.resultsLBL.AutoSize = true;
-            this.resultsLBL.Location = new System.Drawing.Point(32, 308);
+            this.resultsLBL.Location = new System.Drawing.Point(43, 342);
             this.resultsLBL.Name = "resultsLBL";
             this.resultsLBL.Size = new System.Drawing.Size(42, 13);
             this.resultsLBL.TabIndex = 2;
@@ -80,7 +84,7 @@
             // serverAddressTB
             // 
             this.serverAddressTB.BackColor = System.Drawing.SystemColors.Window;
-            this.serverAddressTB.Location = new System.Drawing.Point(112, 12);
+            this.serverAddressTB.Location = new System.Drawing.Point(92, 15);
             this.serverAddressTB.Name = "serverAddressTB";
             this.serverAddressTB.Size = new System.Drawing.Size(358, 20);
             this.serverAddressTB.TabIndex = 1;
@@ -89,24 +93,24 @@
             // serverAddressLBL
             // 
             this.serverAddressLBL.AutoSize = true;
-            this.serverAddressLBL.Location = new System.Drawing.Point(32, 15);
+            this.serverAddressLBL.Location = new System.Drawing.Point(12, 18);
             this.serverAddressLBL.Name = "serverAddressLBL";
-            this.serverAddressLBL.Size = new System.Drawing.Size(79, 13);
+            this.serverAddressLBL.Size = new System.Drawing.Size(45, 13);
             this.serverAddressLBL.TabIndex = 4;
-            this.serverAddressLBL.Text = "Server Address";
+            this.serverAddressLBL.Text = "Address";
             // 
             // mailToLBL
             // 
             this.mailToLBL.AutoSize = true;
-            this.mailToLBL.Location = new System.Drawing.Point(32, 66);
+            this.mailToLBL.Location = new System.Drawing.Point(14, 16);
             this.mailToLBL.Name = "mailToLBL";
-            this.mailToLBL.Size = new System.Drawing.Size(42, 13);
+            this.mailToLBL.Size = new System.Drawing.Size(48, 13);
             this.mailToLBL.TabIndex = 6;
-            this.mailToLBL.Text = "Mail To";
+            this.mailToLBL.Text = "Send To";
             // 
             // mailToTB
             // 
-            this.mailToTB.Location = new System.Drawing.Point(112, 63);
+            this.mailToTB.Location = new System.Drawing.Point(94, 13);
             this.mailToTB.Name = "mailToTB";
             this.mailToTB.Size = new System.Drawing.Size(358, 20);
             this.mailToTB.TabIndex = 2;
@@ -115,15 +119,15 @@
             // mailFromLBL
             // 
             this.mailFromLBL.AutoSize = true;
-            this.mailFromLBL.Location = new System.Drawing.Point(32, 92);
+            this.mailFromLBL.Location = new System.Drawing.Point(14, 39);
             this.mailFromLBL.Name = "mailFromLBL";
-            this.mailFromLBL.Size = new System.Drawing.Size(52, 13);
+            this.mailFromLBL.Size = new System.Drawing.Size(58, 13);
             this.mailFromLBL.TabIndex = 8;
-            this.mailFromLBL.Text = "Mail From";
+            this.mailFromLBL.Text = "Send From";
             // 
             // mailFromTB
             // 
-            this.mailFromTB.Location = new System.Drawing.Point(112, 89);
+            this.mailFromTB.Location = new System.Drawing.Point(94, 36);
             this.mailFromTB.Name = "mailFromTB";
             this.mailFromTB.Size = new System.Drawing.Size(358, 20);
             this.mailFromTB.TabIndex = 3;
@@ -132,7 +136,7 @@
             // usernameLBL
             // 
             this.usernameLBL.AutoSize = true;
-            this.usernameLBL.Location = new System.Drawing.Point(32, 118);
+            this.usernameLBL.Location = new System.Drawing.Point(12, 68);
             this.usernameLBL.Name = "usernameLBL";
             this.usernameLBL.Size = new System.Drawing.Size(55, 13);
             this.usernameLBL.TabIndex = 10;
@@ -140,7 +144,7 @@
             // 
             // usernameTB
             // 
-            this.usernameTB.Location = new System.Drawing.Point(112, 115);
+            this.usernameTB.Location = new System.Drawing.Point(92, 66);
             this.usernameTB.Name = "usernameTB";
             this.usernameTB.Size = new System.Drawing.Size(358, 20);
             this.usernameTB.TabIndex = 4;
@@ -148,7 +152,7 @@
             // passwordLBL
             // 
             this.passwordLBL.AutoSize = true;
-            this.passwordLBL.Location = new System.Drawing.Point(32, 144);
+            this.passwordLBL.Location = new System.Drawing.Point(12, 95);
             this.passwordLBL.Name = "passwordLBL";
             this.passwordLBL.Size = new System.Drawing.Size(53, 13);
             this.passwordLBL.TabIndex = 12;
@@ -156,7 +160,7 @@
             // 
             // passwordTB
             // 
-            this.passwordTB.Location = new System.Drawing.Point(112, 141);
+            this.passwordTB.Location = new System.Drawing.Point(92, 92);
             this.passwordTB.Name = "passwordTB";
             this.passwordTB.Size = new System.Drawing.Size(358, 20);
             this.passwordTB.TabIndex = 5;
@@ -165,7 +169,7 @@
             // subjectLBL
             // 
             this.subjectLBL.AutoSize = true;
-            this.subjectLBL.Location = new System.Drawing.Point(32, 170);
+            this.subjectLBL.Location = new System.Drawing.Point(14, 63);
             this.subjectLBL.Name = "subjectLBL";
             this.subjectLBL.Size = new System.Drawing.Size(43, 13);
             this.subjectLBL.TabIndex = 14;
@@ -173,7 +177,7 @@
             // 
             // subjectTB
             // 
-            this.subjectTB.Location = new System.Drawing.Point(112, 167);
+            this.subjectTB.Location = new System.Drawing.Point(94, 60);
             this.subjectTB.Name = "subjectTB";
             this.subjectTB.Size = new System.Drawing.Size(358, 20);
             this.subjectTB.TabIndex = 6;
@@ -181,7 +185,7 @@
             // bodyLBL
             // 
             this.bodyLBL.AutoSize = true;
-            this.bodyLBL.Location = new System.Drawing.Point(32, 196);
+            this.bodyLBL.Location = new System.Drawing.Point(14, 89);
             this.bodyLBL.Name = "bodyLBL";
             this.bodyLBL.Size = new System.Drawing.Size(31, 13);
             this.bodyLBL.TabIndex = 16;
@@ -189,7 +193,7 @@
             // 
             // bodyTB
             // 
-            this.bodyTB.Location = new System.Drawing.Point(112, 193);
+            this.bodyTB.Location = new System.Drawing.Point(94, 86);
             this.bodyTB.Multiline = true;
             this.bodyTB.Name = "bodyTB";
             this.bodyTB.Size = new System.Drawing.Size(358, 88);
@@ -198,47 +202,71 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 40);
+            this.label1.Location = new System.Drawing.Point(12, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.Size = new System.Drawing.Size(26, 13);
             this.label1.TabIndex = 18;
-            this.label1.Text = "Server Port";
+            this.label1.Text = "Port";
             // 
             // serverPortTB
             // 
-            this.serverPortTB.Location = new System.Drawing.Point(112, 37);
+            this.serverPortTB.Location = new System.Drawing.Point(92, 40);
             this.serverPortTB.Name = "serverPortTB";
             this.serverPortTB.Size = new System.Drawing.Size(358, 20);
             this.serverPortTB.TabIndex = 17;
             this.serverPortTB.Text = "25";
             this.serverPortTB.Leave += new System.EventHandler(this.serverPortTB_Leave);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.serverAddressTB);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.serverAddressLBL);
+            this.groupBox1.Controls.Add(this.serverPortTB);
+            this.groupBox1.Controls.Add(this.usernameTB);
+            this.groupBox1.Controls.Add(this.usernameLBL);
+            this.groupBox1.Controls.Add(this.passwordTB);
+            this.groupBox1.Controls.Add(this.passwordLBL);
+            this.groupBox1.Location = new System.Drawing.Point(35, 13);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(457, 118);
+            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Server Details";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.subjectTB);
+            this.groupBox2.Controls.Add(this.mailToTB);
+            this.groupBox2.Controls.Add(this.bodyLBL);
+            this.groupBox2.Controls.Add(this.mailToLBL);
+            this.groupBox2.Controls.Add(this.bodyTB);
+            this.groupBox2.Controls.Add(this.mailFromTB);
+            this.groupBox2.Controls.Add(this.subjectLBL);
+            this.groupBox2.Controls.Add(this.mailFromLBL);
+            this.groupBox2.Location = new System.Drawing.Point(33, 137);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(459, 186);
+            this.groupBox2.TabIndex = 20;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Test E-mail";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 434);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.serverPortTB);
-            this.Controls.Add(this.bodyLBL);
-            this.Controls.Add(this.bodyTB);
-            this.Controls.Add(this.subjectLBL);
-            this.Controls.Add(this.subjectTB);
-            this.Controls.Add(this.passwordLBL);
-            this.Controls.Add(this.passwordTB);
-            this.Controls.Add(this.usernameLBL);
-            this.Controls.Add(this.usernameTB);
-            this.Controls.Add(this.mailFromLBL);
-            this.Controls.Add(this.mailFromTB);
-            this.Controls.Add(this.mailToLBL);
-            this.Controls.Add(this.mailToTB);
-            this.Controls.Add(this.serverAddressLBL);
-            this.Controls.Add(this.serverAddressTB);
+            this.ClientSize = new System.Drawing.Size(539, 581);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.resultsLBL);
             this.Controls.Add(this.resultsTB);
             this.Controls.Add(this.runTestBTN);
             this.Name = "Form1";
             this.Text = "Simple SMTP Test";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,6 +293,8 @@
         private System.Windows.Forms.TextBox bodyTB;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox serverPortTB;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
 
