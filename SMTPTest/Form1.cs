@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Net.Mail;
+using System.Net;
 using System.Drawing;
 
 namespace SMTPTest
@@ -52,7 +53,6 @@ namespace SMTPTest
         private Boolean validateMailToTB()
         {
             Boolean result = true;
-            int n;
             if (mailToTB.Text != "")
             {
                 foreach (var address in mailToTB.Text.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
@@ -83,7 +83,6 @@ namespace SMTPTest
         private Boolean validateMailFromTB()
         {
             Boolean result = true;
-            int n;
             if (!isValidEmail(mailFromTB.Text))
             {
                 result = false;
@@ -122,10 +121,11 @@ namespace SMTPTest
 
         private void runTestBTN_Click(object sender, EventArgs e)
         {
+            Boolean sucess = false;
             //only atempt the send if valid details have been entered.
             if (validateAllFields())
             {
-                Boolean sucess = sendMail();
+                sucess = sendMail();
                 if (sucess)
                 {
                     resultsTB.Text = "Mail sent sucessfully";
@@ -149,6 +149,16 @@ namespace SMTPTest
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Host = serverAddressTB.Text;
+            if(useAuthCB.Checked)
+            {
+                NetworkCredential basicCredential = new NetworkCredential(usernameTB.Text, passwordTB.Text);
+                client.UseDefaultCredentials = false;
+                client.Credentials = basicCredential;
+            }
+            if(useTLSCB.Checked)
+            {
+                client.EnableSsl = true;
+            }
             mail.Subject = subjectTB.Text;
             mail.Body = bodyTB.Text;
             //mail.Attachments.Add(new Attachment(debugFileLocation));
@@ -208,7 +218,7 @@ namespace SMTPTest
                     simpleErr = "The message is too large for the destination mailbox.";
                     break;
                 case SmtpStatusCode.GeneralFailure:
-                    simpleErr = "General failure, this typically indicates the host could not be found.";
+                    simpleErr = "General failure, this typically indicates the host could not be found. Verify the server address and port number.";
                     break;
                 case SmtpStatusCode.InsufficientStorage:
                     simpleErr = "SMTP server has insifficent storage.";
@@ -226,7 +236,7 @@ namespace SMTPTest
                     simpleErr = "Transaction with recpient mailbox is failed. This may be a trainsent error, re-try sending.";
                     break;
                 case SmtpStatusCode.MustIssueStartTlsFirst:
-                    simpleErr = "The SMTP server onyl appects TLS connections. Please confgiure the test to use TLS";
+                    simpleErr = "The SMTP server only appects TLS connections. Please confgiure the test to use TLS";
                     break;
                 case SmtpStatusCode.ServiceNotAvailable:
                     simpleErr = "SMTP is not avalaible on this server";
@@ -266,6 +276,43 @@ namespace SMTPTest
         private void mailFromTB_Leave(object sender, EventArgs e)
         {
             validateMailFromTB();
+        }
+
+        private void useAuthCB_CheckedChanged(object sender, EventArgs e)
+        {
+            checkAuth();
+        }
+
+        private void checkAuth()
+        {
+            if (useAuthCB.Checked)
+            {
+                usernameTB.Enabled = true;
+                passwordTB.Enabled = true;
+            }
+            else
+            {
+                usernameTB.Enabled = false;
+                passwordTB.Enabled = false;
+            }
+        }
+
+        private void checkTLS()
+        {
+            if (useTLSCB.Checked)
+            {
+                serverPortTB.Text = "587";
+            }
+            else
+            {
+                serverPortTB.Text = "25";
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            checkAuth();
+            checkTLS();
         }
     }
 }
