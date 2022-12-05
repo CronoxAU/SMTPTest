@@ -147,7 +147,6 @@ namespace SMTPTest
 
             client.Port = Int32.Parse(serverPortTB.Text);
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
             client.Host = serverAddressTB.Text;
             if(useAuthCB.Checked)
             {
