@@ -51,6 +51,7 @@
             this.useTLSCB = new System.Windows.Forms.CheckBox();
             this.useAuthCB = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lookupFromDomainBTN = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.domainHasValidDmarcCB = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -73,7 +74,7 @@
             // 
             // sendEmailTestBTN
             // 
-            this.sendEmailTestBTN.Location = new System.Drawing.Point(116, 236);
+            this.sendEmailTestBTN.Location = new System.Drawing.Point(219, 235);
             this.sendEmailTestBTN.Name = "sendEmailTestBTN";
             this.sendEmailTestBTN.Size = new System.Drawing.Size(124, 23);
             this.sendEmailTestBTN.TabIndex = 3;
@@ -276,6 +277,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lookupFromDomainBTN);
             this.groupBox2.Controls.Add(this.subjectTB);
             this.groupBox2.Controls.Add(this.mailToTB);
             this.groupBox2.Controls.Add(this.bodyLBL);
@@ -291,6 +293,16 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Test E-mail";
+            // 
+            // lookupFromDomainBTN
+            // 
+            this.lookupFromDomainBTN.Location = new System.Drawing.Point(17, 235);
+            this.lookupFromDomainBTN.Name = "lookupFromDomainBTN";
+            this.lookupFromDomainBTN.Size = new System.Drawing.Size(124, 23);
+            this.lookupFromDomainBTN.TabIndex = 17;
+            this.lookupFromDomainBTN.Text = "Lookup Domain";
+            this.lookupFromDomainBTN.UseVisualStyleBackColor = true;
+            this.lookupFromDomainBTN.Click += new System.EventHandler(this.lookupFromDomainBTN_Click);
             // 
             // groupBox3
             // 
@@ -500,6 +512,7 @@
         private System.Windows.Forms.CheckBox domainHasValidDkimCB;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox dmarcRecordTB;
+        private System.Windows.Forms.Button lookupFromDomainBTN;
     }
 }
 

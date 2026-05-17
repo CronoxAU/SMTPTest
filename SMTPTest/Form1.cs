@@ -231,28 +231,58 @@ namespace SMTPTest
                     simpleErr = "The message is too large for the destination mailbox.";
                     break;
                 case SmtpStatusCode.GeneralFailure:
-                    simpleErr = "General failure, this typically indicates the host could not be found. Verify the server address and port number.";
+                    simpleErr = "General failure. This typically indicates the host could not be found. Verify the server address and port number.";
                     break;
                 case SmtpStatusCode.InsufficientStorage:
-                    simpleErr = "SMTP server has insifficent storage.";
+                    simpleErr = "SMTP server has insufficient storage.";
                     break;
                 case SmtpStatusCode.LocalErrorInProcessing:
-                    simpleErr = "Mail request denied. This can occur with the client's IP accress cannot be resolved (ie reserve lookup failed), or the client domain has been identified as an open relay or spam source.";
+                    simpleErr = "Mail request denied. This can occur when the client's IP address cannot be resolved (i.e., reverse lookup failed), or the client domain has been identified as an open relay or spam source.";
                     break;
                 case SmtpStatusCode.MailboxBusy:
-                    simpleErr = "Recipent mailbox is busy. This may be a trainsent error, re-try sending.";
+                    simpleErr = "Recipient mailbox is busy. This may be a transient error, retry sending.";
                     break;
                 case SmtpStatusCode.MailboxUnavailable:
-                    simpleErr = "Recpient mailbox is unavalaible. This may be a trainsent error, re-try sending.";
+                    simpleErr = "Recipient mailbox is unavailable. This may be a transient error, retry sending.";
+                    break;
+                case SmtpStatusCode.MailboxNameNotAllowed:
+                    simpleErr = "Mailbox name is not allowed. The email address may contain invalid characters or format.";
                     break;
                 case SmtpStatusCode.TransactionFailed:
-                    simpleErr = "Transaction with recpient mailbox is failed. This may be a trainsent error, re-try sending.";
+                    simpleErr = "Transaction with recipient mailbox failed. This may be a transient error, retry sending.";
+                    break;
+                case SmtpStatusCode.UserNotLocalTryAlternatePath:
+                    simpleErr = "User is not local to this server. The server may require using an alternate path or relay.";
+                    break;
+                case SmtpStatusCode.UserNotLocalWillForward:
+                    simpleErr = "User is not local to this server, but the server will forward the message.";
                     break;
                 case SmtpStatusCode.MustIssueStartTlsFirst:
-                    simpleErr = "The SMTP server only appects TLS connections. Please confgiure the test to use TLS";
+                    simpleErr = "The SMTP server only accepts TLS connections. Please configure the test to use TLS.";
                     break;
                 case SmtpStatusCode.ServiceNotAvailable:
-                    simpleErr = "SMTP is not avalaible on this server";
+                    simpleErr = "SMTP service is not available on this server.";
+                    break;
+                case SmtpStatusCode.CommandNotImplemented:
+                    simpleErr = "Command not implemented by the SMTP server.";
+                    break;
+                case SmtpStatusCode.CommandParameterNotImplemented:
+                    simpleErr = "Command parameter not implemented by the SMTP server.";
+                    break;
+                case SmtpStatusCode.SyntaxError:
+                    simpleErr = "Syntax error in command or arguments. Check your SMTP configuration.";
+                    break;
+                case SmtpStatusCode.CommandUnrecognized:
+                    simpleErr = "Command not recognized by the SMTP server.";
+                    break;
+                case SmtpStatusCode.BadCommandSequence:
+                    simpleErr = "Commands sent in incorrect sequence. This may indicate an authentication or configuration issue.";
+                    break;
+                case SmtpStatusCode.Ok:
+                    simpleErr = "Mail sent successfully.";
+                    break;
+                default:
+                    simpleErr = $"SMTP error occurred (Code: {statusCode}). Check server logs for more details.";
                     break;
             }
             return simpleErr;
@@ -419,6 +449,10 @@ namespace SMTPTest
             ResetCheckBoxColor(domainHasValidDkimCB);
             ResetCheckBoxColor(domainHasValidDmarcCB);
 
+            // Force the UI to refresh and show the cleared fields
+            this.Refresh();
+            Application.DoEvents();
+
             try
             { 
                 Cursor.Current = Cursors.WaitCursor;
@@ -452,31 +486,6 @@ namespace SMTPTest
                 }
                 AppendColoredText(Environment.NewLine, Color.Black, false);
 
-                // Lookup DMARC record
-                string dmarcRecord = GetDMARCRecord(domain, out string dmarcDebugInfo);
-                dmarcRecordTB.Text = dmarcRecord;
-                AppendColoredText("=== DMARC Lookup ===" + Environment.NewLine, Color.Black, true);
-                AppendColoredText(dmarcDebugInfo + Environment.NewLine, Color.Black, false);
-
-                // Validate DMARC record
-                bool hasDmarcWarnings = false;
-                if (!dmarcRecord.StartsWith("No DMARC") && !dmarcRecord.StartsWith("Error"))
-                {
-                    bool isValidDmarc = ValidateDMARCRecord(dmarcRecord, out string dmarcValidationMsg);
-                    domainHasValidDmarcCB.Checked = isValidDmarc;
-                    SetCheckBoxColor(domainHasValidDmarcCB, isValidDmarc);
-
-                    hasDmarcWarnings = !string.IsNullOrEmpty(dmarcValidationMsg);
-                    Color validationColor = isValidDmarc ? (hasDmarcWarnings ? Color.Orange : Color.Green) : Color.Red;
-                    AppendColoredText("DMARC Validation: " + (isValidDmarc ? "VALID" : "INVALID") + Environment.NewLine, validationColor, true);
-
-                    if (hasDmarcWarnings)
-                    {
-                        AppendValidationMessages(dmarcValidationMsg);
-                    }
-                }
-                AppendColoredText(Environment.NewLine, Color.Black, false);
-
                 // Lookup DKIM record
                 string dkimRecord = GetDKIMRecord(domain, out string dkimDebugInfo);
                 dkimRecordTB.Text = dkimRecord;
@@ -500,6 +509,32 @@ namespace SMTPTest
                         AppendValidationMessages(dkimValidationMsg);
                     }
                 }
+                AppendColoredText(Environment.NewLine, Color.Black, false);
+
+                // Lookup DMARC record
+                string dmarcRecord = GetDMARCRecord(domain, out string dmarcDebugInfo);
+                dmarcRecordTB.Text = dmarcRecord;
+                AppendColoredText("=== DMARC Lookup ===" + Environment.NewLine, Color.Black, true);
+                AppendColoredText(dmarcDebugInfo + Environment.NewLine, Color.Black, false);
+
+                // Validate DMARC record
+                bool hasDmarcWarnings = false;
+                if (!dmarcRecord.StartsWith("No DMARC") && !dmarcRecord.StartsWith("Error"))
+                {
+                    bool isValidDmarc = ValidateDMARCRecord(dmarcRecord, out string dmarcValidationMsg);
+                    domainHasValidDmarcCB.Checked = isValidDmarc;
+                    SetCheckBoxColor(domainHasValidDmarcCB, isValidDmarc);
+
+                    hasDmarcWarnings = !string.IsNullOrEmpty(dmarcValidationMsg);
+                    Color validationColor = isValidDmarc ? (hasDmarcWarnings ? Color.Orange : Color.Green) : Color.Red;
+                    AppendColoredText("DMARC Validation: " + (isValidDmarc ? "VALID" : "INVALID") + Environment.NewLine, validationColor, true);
+
+                    if (hasDmarcWarnings)
+                    {
+                        AppendValidationMessages(dmarcValidationMsg);
+                    }
+                }
+                
 
                 Cursor.Current = Cursors.Default;
             }
@@ -1078,6 +1113,42 @@ namespace SMTPTest
             {
                 validationMessage = "Error validating DKIM record: " + ex.Message;
                 return false;
+            }
+        }
+
+        private void lookupFromDomainBTN_Click(object sender, EventArgs e)
+        {
+            // Extract domain from the mailFromTB email address
+            string emailAddress = mailFromTB.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(emailAddress))
+            {
+                MessageBox.Show("Please enter an email address in the 'From' field first.", "Email Address Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validate the email address format
+            if (!isValidEmail(emailAddress))
+            {
+                MessageBox.Show("Please enter a valid email address in the 'From' field.", "Invalid Email Address", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Extract domain from email address (everything after the @ symbol)
+            int atIndex = emailAddress.IndexOf('@');
+            if (atIndex > 0 && atIndex < emailAddress.Length - 1)
+            {
+                string domain = emailAddress.Substring(atIndex + 1);
+
+                // Set the domain in the domainAddressTB field
+                domainAddressTB.Text = domain;
+
+                // Trigger the domain lookup button click
+                domainLookupBTN.PerformClick();
+            }
+            else
+            {
+                MessageBox.Show("Unable to extract domain from the email address.", "Domain Extraction Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
